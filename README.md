@@ -2,6 +2,18 @@
 
 ### 使用步骤
 1. 按 `subtask.csv` 格式组织好 csv 文件
+
+|  字段   | 含义  | 是否必填  |
+|  ----  | ----  | ----  |
+| storyKey  | 故事key | 是 |
+| sub-taskSummary  | 子任务-标题 | 是 |
+| description  | 子任务-描述 | 是 |
+| storyPoint  | 子任务-估时 | 是 |
+| label  | 子任务-标签 | 是 |
+| userId  | 子任务-执行人 | 否 |
+| startDate  | 子任务-开始时间 | 否 |
+| endDate  | 子任务-结束时间 | 否 |
+
 2. 在 `config.py` 中修改好配置
 3. 确保在python3和pip3中，执行
 ```py
