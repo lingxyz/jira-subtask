@@ -60,13 +60,12 @@ class JiraTool:
     if len(issue) > 6:
       startDate = issue[6]
       endDate = issue[7]
+      print(startDate, "startDate")
       # 转化时间格式
-      if "/" in startDate or "/" in endDate:
+      if startDate != '' and "/" in startDate:
         startDate = startDate.replace("/", "-")
+      if endDate != '' and "/" in endDate:
         endDate = endDate.replace("/", "-")
-    # 姓名转工号
-    userId = nameTransferId[userId]
-    print(userId)
 
     # 入参字段
     fields = {
@@ -74,14 +73,20 @@ class JiraTool:
       #"fixVersions": [{"name": fixVersion}],
       "parent": {"key": parentKey},
       "labels": [label],
-      "assignee": {"name": userId},
+      # "assignee": {"name": userId},
       "summary": subTaskSummary,
       "description": descriptioin,
       "issuetype": {"id": "10302", "name": "子任务"},
       "customfield_10006": float(storyPoint),
-      "customfield_10607": startDate,
-      "customfield_10609": endDate
+      # "customfield_10607": startDate,
+      # "customfield_10609": endDate
     }
+    if userId: # userId 兼容非必填
+      fields['assignee'] = {"name": nameTransferId[userId]} # 姓名转工号后赋值
+    if startDate: # startDate 兼容非必填
+      fields['customfield_10607'] = startDate
+    if endDate: # endDate 兼容非必填
+      fields['customfield_10609'] = endDate
 
     if self.jiraClinet is None:
       self.login
